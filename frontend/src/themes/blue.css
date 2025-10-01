@@ -1,0 +1,10 @@
+/* Scholarly Blue Theme */
+body.theme-blue {
+  --primary-color: #1c7ed6;
+  --background-color: #f1f3f5;
+  --text-color: #495057;
+  --header-color: #212529;
+  --card-background: #ffffff;
+  --border-color: #e9ecef;
+  --link-hover-color: #1971c2;
+}

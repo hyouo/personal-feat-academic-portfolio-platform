@@ -1,0 +1,10 @@
+/* Default Light Theme */
+body.theme-default {
+  --primary-color: #007bff;
+  --background-color: #ffffff;
+  --text-color: #343a40;
+  --header-color: #212529;
+  --card-background: #f8f9fa;
+  --border-color: #dee2e6;
+  --link-hover-color: #0056b3;
+}

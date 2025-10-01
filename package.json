@@ -1,0 +1,19 @@
+{
+  "name": "academic-portfolio-platform",
+  "version": "2.0.0",
+  "description": "A platform for managing and displaying personal academic portfolios with advanced features.",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm install --prefix backend && npm install --prefix frontend --legacy-peer-deps",
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
+    "start": "concurrently \"npm start --prefix backend\" \"npm run dev --prefix frontend\"",
+    "clean": "rm -rf node_modules package-lock.json frontend/node_modules frontend/package-lock.json backend/node_modules backend/package-lock.json backend/src/db/portfolio.db"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
+}

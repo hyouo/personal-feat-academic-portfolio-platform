@@ -1,0 +1,10 @@
+/* Academic Dark Theme */
+body.theme-dark {
+  --primary-color: #4dabf7;
+  --background-color: #212529;
+  --text-color: #ced4da;
+  --header-color: #f8f9fa;
+  --card-background: #343a40;
+  --border-color: #495057;
+  --link-hover-color: #a5d8ff;
+}

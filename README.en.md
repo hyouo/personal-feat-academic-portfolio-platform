@@ -61,7 +61,7 @@ You must have **Node.js** (v18 or higher recommended) installed on your system. 
 ---
 ### 5. Cleanup (Optional)
 
-To reset the project (remove all dependencies and the database), run this command from the **project root**:
+To remove installed dependencies while preserving the database, uploads, environment files and lockfiles, run this command from the **project root**:
 ```bash
 npm run clean
 ```
@@ -73,3 +73,18 @@ npm run clean
 This project is licensed under the MIT License.
 
 Copyright (c) 2025 yuhong
+## Configuration and verification
+
+Vite proxies `/api` and `/uploads` to the local backend. Update the proxy targets in
+`frontend/vite.config.js` when changing its port. Production hosting needs a reverse
+proxy for these paths. For a separate backend origin, set `VITE_API_BASE_URL` in
+`frontend/.env` before building. `npm start` remains a local development-style launcher.
+Private attachments and attachments of private projects/publications require authentication;
+previously downloaded copies cannot be recalled by changing visibility.
+
+```bash
+npm test
+npm test --workspace backend
+npm run lint --workspace frontend
+npm run build --workspace frontend
+```

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';
+import api, { downloadAttachment } from '../services/api';
 
 function FileLibraryPage() {
   const [attachments, setAttachments] = useState([]);
@@ -22,7 +22,7 @@ function FileLibraryPage() {
           project: new Set(),
         };
         allAttachments.forEach(att => {
-          if (att.parent_type && att.parent_id) {
+          if (parentIds[att.parent_type] && att.parent_id) {
             parentIds[att.parent_type].add(att.parent_id);
           }
         });
@@ -81,9 +81,9 @@ function FileLibraryPage() {
           {attachments.map(att => (
             <tr key={att.id}>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                <a href={`http://localhost:3001${att.file_url}`} target="_blank" rel="noopener noreferrer">
+                <button type="button" onClick={() => downloadAttachment(att).catch(() => setError('Could not download attachment.'))}>
                   {att.original_name}
-                </a>
+                </button>
               </td>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>{att.description}</td>
               <td style={{ border: '1px solid #ddd', padding: '8px' }}>

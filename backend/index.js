@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('node:path').join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const { initialize } = require('./src/db/database.js');
-const path = require('path');
+const { UPLOAD_DIR } = require('./src/paths');
 const fs = require('fs');
 
 const app = express();
@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3001;
 // --- Middleware ---
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', require('./src/middleware/uploadAccess'), express.static(UPLOAD_DIR));
 
 // --- API Routes ---
 const authRoutes = require('./src/routes/auth');
@@ -55,9 +55,9 @@ async function startServer() {
     }
 
     // Ensure the uploads directory exists
-    const uploadsDir = path.join(__dirname, 'uploads');
+    const uploadsDir = UPLOAD_DIR;
     if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir);
+      fs.mkdirSync(uploadsDir, { recursive: true });
       console.log(`Uploads directory created at: ${uploadsDir}`);
     }
 
@@ -66,15 +66,20 @@ async function startServer() {
     console.log('Database has been initialized successfully.');
 
     // Start the Express server
-    app.listen(PORT, () => {
+    return app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error(error.message); // Log the specific error message
-    process.exit(1); // Exit with a failure code
+    throw error;
   }
 }
 
-startServer();
+if (require.main === module) {
+  startServer().catch(error => {
+    console.error(error.message);
+    process.exit(1);
+  });
+}
 
 module.exports = app;
+module.exports.startServer = startServer;

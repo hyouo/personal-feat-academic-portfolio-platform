@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
+import api, { assetUrl } from '../services/api';
 
 // Import theme and font stylesheets
 import '../themes/default.css';
@@ -68,8 +68,8 @@ const ImageGallery = ({ images }) => {
     return (
         <div style={galleryStyle}>
             {images.map(img => (
-                <a key={img.id} href={`http://localhost:3001${img.file_url}`} target="_blank" rel="noopener noreferrer">
-                    <img src={`http://localhost:3001${img.file_url}`} alt={img.description || img.original_name} style={imageStyle} />
+                <a key={img.id} href={assetUrl(img.file_url)} target="_blank" rel="noopener noreferrer">
+                    <img src={assetUrl(img.file_url)} alt={img.description || img.original_name} style={imageStyle} />
                 </a>
             ))}
         </div>
@@ -84,7 +84,7 @@ const AttachmentList = ({ attachments }) => {
             <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0 }}>
                 {attachments.map(att => (
                     <li key={att.id} style={{ display: 'inline-block', marginRight: '15px' }}>
-                        <a href={`http://localhost:3001${att.file_url}`} target="_blank" rel="noopener noreferrer">{att.description || att.original_name}</a>
+                        <a href={assetUrl(att.file_url)} target="_blank" rel="noopener noreferrer">{att.description || att.original_name}</a>
                     </li>
                 ))}
             </ul>
@@ -171,7 +171,7 @@ function PublicPage() {
       {visibleSections.length > 0 && <TableOfContents visibleSections={visibleSections} sectionDisplayNames={sectionDisplayNames} />}
       <main style={{ marginLeft: '240px', flex: 1, padding: '20px' }}>
           <header style={{ textAlign: 'center', marginBottom: '50px' }}>
-            {profile?.profile_image_url && <img src={`http://localhost:3001${profile.profile_image_url}`} alt="Profile" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', marginBottom: '20px' }} />}
+            {profile?.profile_image_url && <img src={assetUrl(profile.profile_image_url)} alt="Profile" style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', marginBottom: '20px' }} />}
             <h1 style={{ fontSize: '2.5rem', margin: '0 0 10px 0', color: 'var(--header-color)' }}>{profile?.full_name || 'Your Name'}</h1>
             {profile?.bio && <div style={{ fontSize: '1.1rem', color: 'var(--text-color)', margin: '0 0 20px 0' }}><RichTextDisplay content={profile.bio} /></div>}
             <div className="social-links" style={{ marginBottom: '30px' }}>

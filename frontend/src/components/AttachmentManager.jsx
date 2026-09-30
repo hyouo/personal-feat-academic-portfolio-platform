@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
+import api, { downloadAttachment } from '../services/api';
 
 function AttachmentManager({ parentId, parentType }) {
   const [attachments, setAttachments] = useState([]);
@@ -98,7 +98,7 @@ function AttachmentManager({ parentId, parentType }) {
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {attachments.map(att => (
           <li key={att.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '5px 0', borderBottom: '1px solid #eee' }}>
-            <a href={`http://localhost:3001${att.file_url}`} target="_blank" rel="noopener noreferrer">{att.original_name}</a>
+            <button type="button" onClick={() => downloadAttachment(att).catch(() => setError('Could not download attachment.'))}>{att.original_name}</button>
             <div>
               <button onClick={() => handleTogglePublic(att)} style={{marginRight: '5px'}}>{att.is_public ? 'Public' : 'Private'}</button>
               <button onClick={() => handleDelete(att.id)}>Delete</button>

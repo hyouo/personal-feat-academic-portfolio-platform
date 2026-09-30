@@ -1,7 +1,7 @@
 const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const { DB_PATH } = require('../paths');
 
-const dbPath = path.resolve(__dirname, 'portfolio.db');
+const dbPath = DB_PATH;
 const db = new sqlite3.Database(dbPath);
 
 // A promise-based wrapper for db.run to make it awaitable

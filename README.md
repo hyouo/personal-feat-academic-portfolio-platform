@@ -61,7 +61,7 @@
 ---
 ### 5. 清理环境 (可选)
 
-要重置项目（删除所有依赖项和数据库），请在**项目根目录**下运行此命令：
+要清理已安装的依赖项（保留数据库、上传文件、环境配置和依赖锁文件），请在**项目根目录**下运行此命令：
 ```bash
 npm run clean
 ```
@@ -73,3 +73,20 @@ npm run clean
 本项目根据 MIT 许可证授权。
 
 Copyright (c) 2025 yuhong
+
+## 配置与验证
+
+开发环境通过 Vite 代理访问后端的 `/api` 与 `/uploads`，浏览器不再固定连接自己的 `localhost:3001`。
+后端改用其他端口时同步修改 `frontend/vite.config.js` 的代理目标。生产部署应为这两个路径配置反向代理；
+前后端不同域名时，在 `frontend/.env` 设置 `VITE_API_BASE_URL=https://你的后端域名/api` 后重新构建。
+`npm start` 仍用于本地开发式启动，不是生产部署配置。
+
+管理员下载附件使用登录凭据；私有附件、私有项目或论文的附件不能通过原始文件地址匿名访问。
+之前已被下载的文件无法通过修改可见性收回。
+
+```bash
+npm test
+npm test --workspace backend
+npm run lint --workspace frontend
+npm run build --workspace frontend
+```

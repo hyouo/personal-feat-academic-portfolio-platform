@@ -1,0 +1,25 @@
+name: Application regression tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PUPPETEER_SKIP_DOWNLOAD: 'true'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm run install:all -- --no-audit --no-fund
+      - run: npm test
+      - run: npm test --workspace backend
+      - run: npm run lint --workspace frontend
+      - run: npm run build --workspace frontend

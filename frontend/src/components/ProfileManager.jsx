@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import api from '../services/api';
+import api, { assetUrl } from '../services/api';
 import RichTextEditor from './RichTextEditor'; // Import the Rich Text Editor
 
 function ProfileManager() {
@@ -25,7 +25,7 @@ function ProfileManager() {
         if (response.data.data) {
           setProfile(response.data.data);
           if (response.data.data.profile_image_url) {
-            setPreview(`http://localhost:3001${response.data.data.profile_image_url}`);
+            setPreview(assetUrl(response.data.data.profile_image_url));
           }
         }
       } catch (error) {
@@ -84,7 +84,7 @@ function ProfileManager() {
       });
       setProfile(response.data.data);
       if (response.data.data.profile_image_url) {
-          setPreview(`http://localhost:3001${response.data.data.profile_image_url}`);
+          setPreview(assetUrl(response.data.data.profile_image_url));
       }
       setSelectedFile(null);
       setMessage('Profile updated successfully!');

@@ -4,11 +4,12 @@ const { db } = require('../db/database');
 const authMiddleware = require('../middleware/authMiddleware');
 const multer = require('multer');
 const path = require('path');
+const { UPLOAD_DIR } = require('../paths');
 
 // --- Multer Configuration for File Uploads ---
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+    cb(null, UPLOAD_DIR);
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
